@@ -95,7 +95,7 @@ class PreferencesDialog(tk.Toplevel):
 
         output = config.getint('output') or (config.OUT_EDDN | config.OUT_SHIP_EDS)
         ttk.Label(outframe, text=_('Please choose what data to save')).grid(row=0, padx=5, pady=3, sticky=tk.W)
-        self.out_eddn= tk.IntVar(value = (output & config.OUT_EDDN) and 1)
+        self.out_eddn = tk.IntVar(value = (output & config.OUT_EDDN) and 1)
         ttk.Checkbutton(outframe, text=_('Send station data to the Elite Dangerous Data Network'), variable=self.out_eddn, command=self.outvarchanged).grid(row=1, padx=5, sticky=tk.W)
         self.out_csv = tk.IntVar(value = (output & config.OUT_CSV ) and 1)
         ttk.Checkbutton(outframe, text=_('Market data in CSV format file'), variable=self.out_csv, command=self.outvarchanged).grid(row=2, padx=5, sticky=tk.W)
@@ -103,18 +103,30 @@ class PreferencesDialog(tk.Toplevel):
         ttk.Checkbutton(outframe, text=_("Market data in Slopey's BPC format file"), variable=self.out_bpc, command=self.outvarchanged).grid(row=3, padx=5, sticky=tk.W)
         self.out_td  = tk.IntVar(value = (output & config.OUT_TD  ) and 1)
         ttk.Checkbutton(outframe, text=_('Market data in Trade Dangerous format file'), variable=self.out_td, command=self.outvarchanged).grid(row=4, padx=5, sticky=tk.W)
-        self.out_ship_eds= tk.IntVar(value = (output & config.OUT_SHIP_EDS) and 1)
-        ttk.Checkbutton(outframe, text=_('Ship loadout in E:D Shipyard format file'), variable=self.out_ship_eds, command=self.outvarchanged).grid(row=5, padx=5, pady=(5,0), sticky=tk.W)
-        self.out_ship_coriolis= tk.IntVar(value = (output & config.OUT_SHIP_CORIOLIS) and 1)
-        ttk.Checkbutton(outframe, text=_('Ship loadout in Coriolis format file'), variable=self.out_ship_coriolis, command=self.outvarchanged).grid(row=6, padx=5, sticky=tk.W)
+        self.out_commodities_python  = tk.IntVar(value = (output & config.OUT_COMMODITIES_PYTHON  ) and 1)
+        ttk.Checkbutton(outframe, text=_('Market data as Python dict dump'), variable=self.out_commodities_python, command=self.outvarchanged).grid(row=5, padx=5, sticky=tk.W)
+        self.out_outfitting_python  = tk.IntVar(value = (output & config.OUT_OUTFITTING_PYTHON  ) and 1)
+        ttk.Checkbutton(outframe, text=_('Outfitting data as Python code'), variable=self.out_outfitting_python, command=self.outvarchanged).grid(row=7, padx=5, sticky=tk.W)
+        self.out_shipyard_python  = tk.IntVar(value = (output & config.OUT_SHIPYARD_PYTHON  ) and 1)
+        ttk.Checkbutton(outframe, text=_("Shipyard data as Python code"), variable=self.out_shipyard_python, command=self.outvarchanged).grid(row=8, padx=5, sticky=tk.W)
+        self.out_ship_eds = tk.IntVar(value = (output & config.OUT_SHIP_EDS) and 1)
+        ttk.Checkbutton(outframe, text=_('Ship loadout in E:D Shipyard format file'), variable=self.out_ship_eds, command=self.outvarchanged).grid(row=10, padx=5, pady=(5,0), sticky=tk.W)
+        self.out_ship_coriolis = tk.IntVar(value = (output & config.OUT_SHIP_CORIOLIS) and 1)
+        ttk.Checkbutton(outframe, text=_('Ship loadout in Coriolis format file'), variable=self.out_ship_coriolis, command=self.outvarchanged).grid(row=11, padx=5, sticky=tk.W)
+        self.out_ship_python = tk.IntVar(value = (output & config.OUT_SHIP_PYTHON) and 1)
+        ttk.Checkbutton(outframe, text=_('Ship loadout as Python code'), variable=self.out_ship_python, command=self.outvarchanged).grid(row=12, padx=5, sticky=tk.W)
+        self.out_ships_python = tk.IntVar(value = (output & config.OUT_SHIPS_PYTHON) and 1)
+        ttk.Checkbutton(outframe, text=_('Ships list as Python code'), variable=self.out_ships_python, command=self.outvarchanged).grid(row=13, padx=5, sticky=tk.W)
+        self.out_commander_python = tk.IntVar(value = (output & config.OUT_COMMANDER_PYTHON) and 1)
+        ttk.Checkbutton(outframe, text=_('Commander stats as Python code'), variable=self.out_commander_python, command=self.outvarchanged).grid(row=14, padx=5, sticky=tk.W)
         self.out_log_edsm = tk.IntVar(value = (output & config.OUT_LOG_EDSM) and 1)
-        ttk.Checkbutton(outframe, text=_('Send flight log to Elite Dangerous Star Map'), variable=self.out_log_edsm, command=self.outvarchanged).grid(row=7, padx=5, pady=(5,0), sticky=tk.W)
+        ttk.Checkbutton(outframe, text=_('Send flight log to Elite Dangerous Star Map'), variable=self.out_log_edsm, command=self.outvarchanged).grid(row=15, padx=5, pady=(5,0), sticky=tk.W)
         self.out_log_file = tk.IntVar(value = (output & config.OUT_LOG_FILE) and 1)
-        ttk.Checkbutton(outframe, text=_('Flight log in CSV format file'), variable=self.out_log_file, command=self.outvarchanged).grid(row=8, padx=5, sticky=tk.W)
+        ttk.Checkbutton(outframe, text=_('Flight log in CSV format file'), variable=self.out_log_file, command=self.outvarchanged).grid(row=16, padx=5, sticky=tk.W)
         self.out_log_auto = tk.IntVar(value = monitor.logdir and (output & config.OUT_LOG_AUTO) and 1 or 0)
         if monitor.logdir:
             self.out_log_auto_button = ttk.Checkbutton(outframe, text=_('Automatically make a log entry on entering a system'), variable=self.out_log_auto, command=self.outvarchanged)	# Output setting
-            self.out_log_auto_button.grid(row=9, padx=5, sticky=tk.W)
+            self.out_log_auto_button.grid(row=17, padx=5, sticky=tk.W)
             self.out_log_auto_text = ttk.Label(outframe)
 
         self.dir_label = ttk.Label(frame, text=_('File location'), foreground=style.lookup('TLabelframe.Label', 'foreground'))	# Section heading in settings
@@ -179,7 +191,7 @@ class PreferencesDialog(tk.Toplevel):
         privacyframe = ttk.LabelFrame(frame, text=_('Privacy'))	# Section heading in settings
         privacyframe.grid(padx=10, pady=5, sticky=tk.NSEW)
 
-        self.out_anon= tk.IntVar(value = config.getint('anonymous') and 1)
+        self.out_anon = tk.IntVar(value = config.getint('anonymous') and 1)
         ttk.Label(privacyframe, text=_('How do you want to be identified in the saved data')).grid(row=0, padx=5, sticky=tk.W)
         ttk.Radiobutton(privacyframe, text=_('Cmdr name'), variable=self.out_anon, value=0).grid(padx=5, sticky=tk.W)	# Privacy setting
         ttk.Radiobutton(privacyframe, text=_('Pseudo-anonymized ID'), variable=self.out_anon, value=1).grid(padx=5, sticky=tk.W)	# Privacy setting
@@ -208,7 +220,19 @@ class PreferencesDialog(tk.Toplevel):
         #self.wait_window(self)	# causes duplicate events on OSX
 
     def outvarchanged(self):
-        local = self.out_bpc.get() or self.out_td.get() or self.out_csv.get() or self.out_ship_eds.get() or self.out_ship_coriolis.get() or self.out_log_file.get()
+        local = (self.out_bpc.get()
+                 or self.out_td.get()
+                 or self.out_csv.get()
+                 or self.out_ship_eds.get()
+                 or self.out_ship_coriolis.get()
+                 or self.out_ship_python.get()
+                 or self.out_ships_python.get()
+                 or self.out_commander_python.get()
+                 or self.out_log_file.get()
+                 or self.out_commodities_python.get()
+                 or self.out_outfitting_python.get()
+                 or self.out_shipyard_python.get()
+                 )
         self.dir_label['state'] = local and tk.NORMAL  or tk.DISABLED
         self.outbutton['state'] = local and tk.NORMAL  or tk.DISABLED
         self.outdir['state']    = local and 'readonly' or tk.DISABLED
@@ -312,7 +336,21 @@ class PreferencesDialog(tk.Toplevel):
         config.set('username', self.username.get().strip())
         config.set('password', self.password.get().strip())
 
-        config.set('output', (self.out_eddn.get() and config.OUT_EDDN) + (self.out_bpc.get() and config.OUT_BPC) + (self.out_td.get() and config.OUT_TD) + (self.out_csv.get() and config.OUT_CSV) + (self.out_ship_eds.get() and config.OUT_SHIP_EDS) + (self.out_log_file.get() and config.OUT_LOG_FILE) + (self.out_ship_coriolis.get() and config.OUT_SHIP_CORIOLIS) + (self.out_log_edsm.get() and config.OUT_LOG_EDSM) + (self.out_log_auto.get() and config.OUT_LOG_AUTO))
+        config.set('output', ((self.out_eddn.get() and config.OUT_EDDN)
+                              + (self.out_bpc.get() and config.OUT_BPC)
+                              + (self.out_td.get() and config.OUT_TD)
+                              + (self.out_csv.get() and config.OUT_CSV)
+                              + (self.out_commodities_python.get() and config.OUT_COMMODITIES_PYTHON)
+                              + (self.out_outfitting_python.get() and config.OUT_OUTFITTING_PYTHON)
+                              + (self.out_shipyard_python.get() and config.OUT_SHIPYARD_PYTHON)
+                              + (self.out_ship_eds.get() and config.OUT_SHIP_EDS)
+                              + (self.out_log_file.get() and config.OUT_LOG_FILE)
+                              + (self.out_ship_coriolis.get() and config.OUT_SHIP_CORIOLIS)
+                              + (self.out_ship_python.get() and config.OUT_SHIP_PYTHON)
+                              + (self.out_ships_python.get() and config.OUT_SHIPS_PYTHON)
+                              + (self.out_commander_python.get() and config.OUT_COMMANDER_PYTHON)
+                              + (self.out_log_edsm.get() and config.OUT_LOG_EDSM)
+                              + (self.out_log_auto.get() and config.OUT_LOG_AUTO)))
         config.set('outdir', expanduser(self.outdir.get()))
 
         config.set('edsm_cmdrname', self.edsm_cmdr.get().strip())

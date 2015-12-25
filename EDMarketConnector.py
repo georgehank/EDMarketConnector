@@ -38,6 +38,7 @@ import flightlog
 import eddb
 import stats
 import prefs
+import pydump
 from hotkey import hotkeymgr
 from monitor import monitor
 
@@ -282,6 +283,12 @@ class AppWindow:
                     loadout.export(data)
                 if config.getint('output') & config.OUT_SHIP_CORIOLIS:
                     coriolis.export(data)
+                if config.getint('output') & config.OUT_SHIP_PYTHON:
+                    pydump.export_loadout(data)
+                if config.getint('output') & config.OUT_SHIPS_PYTHON:
+                    pydump.export_ships(data)
+                if config.getint('output') & config.OUT_COMMANDER_PYTHON:
+                    pydump.export_commander(data)
                 if config.getint('output') & config.OUT_LOG_FILE:
                     flightlog.export(data)
                 if config.getint('output') & config.OUT_LOG_EDSM:
@@ -343,10 +350,19 @@ class AppWindow:
                                 td.export(data)
                             if config.getint('output') & config.OUT_BPC:
                                 bpc.export(data, False)
+                            if config.getint('output') & config.OUT_COMMODITIES_PYTHON:
+                                pydump.export_commodities(data)
 
                         elif has_market and (config.getint('output') & (config.OUT_CSV|config.OUT_TD|config.OUT_BPC|config.OUT_EDDN)):
                             # Overwrite any previous error message
                             self.status['text'] = _("Error: Can't get market data!")
+
+                        if has_outfitting:
+                            if config.getint('output') & config.OUT_OUTFITTING_PYTHON:
+                                pydump.export_outfitting(data)
+                        if has_shipyard:
+                            if config.getint('output') & config.OUT_SHIPYARD_PYTHON:
+                                pydump.export_shipyard(data)
 
                         if config.getint('output') & config.OUT_EDDN:
                             old_status = self.status['text']

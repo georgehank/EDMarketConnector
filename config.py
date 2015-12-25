@@ -80,6 +80,13 @@ class Config:
     OUT_LOG_EDSM = 256
     OUT_LOG_AUTO = 512
 
+    OUT_COMMODITIES_PYTHON = 1<<10
+    OUT_OUTFITTING_PYTHON = 1<<11
+    OUT_SHIPYARD_PYTHON = 1<<12
+    OUT_SHIP_PYTHON = 1<<13
+    OUT_SHIPS_PYTHON = 1<<14
+    OUT_COMMANDER_PYTHON = 1<<15
+
     if platform=='darwin':
 
         def __init__(self):
@@ -126,7 +133,7 @@ class Config:
             self.app_dir = join(buf.value, appname)
             if not isdir(self.app_dir):
                 mkdir(self.app_dir)
-            
+
             self.hkey = HKEY()
             disposition = DWORD()
             if RegCreateKeyEx(HKEY_CURRENT_USER, r'Software\Marginal\EDMarketConnector', 0, None, 0, KEY_ALL_ACCESS, None, ctypes.byref(self.hkey), ctypes.byref(disposition)):
